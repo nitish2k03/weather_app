@@ -389,7 +389,7 @@ const WeatherCardWrapper = (data: {
   const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
     return (
       await axios.get(
-        `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
       )
     ).data as IWeatherData;
   };
@@ -524,7 +524,7 @@ function Main() {
   const [loading, setLoading] = useState(false);
   const handleSearch = async (searchTerm: string) => {
     const res = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=e47a80086b7f65b121c000fdb2e36153`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=e47a80086b7f65b121c000fdb2e36153`
     );
     const resData = (await res.json()).map((item: ICityFromAPI) => {
       const idCity = item.lat + item.lon;
