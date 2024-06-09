@@ -15,6 +15,7 @@
 - [ ] Dark Mode Toggle
 - [ ] Componenet Refactoring Into
 - [ ] Local Storage (Saved Locations, Visible Locations)
+- [ ] Pinning locatioin duplicacy
 
 ## CSS Styling:
 
