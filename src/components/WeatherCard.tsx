@@ -43,55 +43,57 @@ export const WeatherCard = ({
 }: IWeatherCard) => {
   return (
     <div
-      className={` w-full min-h-[400px] rounded-md flex border-2 bg-black border-black dark:border-darkBorder ${RubikFont.className}`}
+      className={` w-full lg:min-h-[400px] rounded-md flex lg:flex-row flex-col border-2 bg-black border-black dark:border-darkBorder ${RubikFont.className}`}
     >
-      <div className=" h-full w-1/3 flex flex-col border-r-2 border-black dark:border-darkBorder shadow-lg">
-        <div className="h-2/3  w-full flex flex-col text-white">
-          <div className="w-full h-3/4 flex bg-indigo-600">
-            <div className=" w-3/4 h-full flex justify-start items-center">
-              <div className=" h-full w-[70%] text-9xl pl-6 font-extrabold flex justify-center items-center">
+      <div className=" h-full lg:w-1/3 w-full flex lg:flex-col border-r-2 border-black dark:border-darkBorder shadow-lg">
+        <div className="h-full lg:h-2/3  w-full flex lg:flex-col text-white">
+          <div className="w-full h-full lg:h-3/4 flex bg-indigo-600 lg:flex-row flex-col">
+            <div className="w-full lg:w-3/4 h-full flex justify-start items-center">
+              <div className=" h-full w-[70%] text-2xl md:text-6xl xl:text-9xl pl-6 font-extrabold flex justify-center items-center">
                 {tempConv(temp)}
               </div>
-              <div className=" flex-col w-1/4 text-6xl font-semibold flex justify-center space-y-4">
+              <div className=" flex-col p-2 w-1/4 text-2xl xl:text-6xl font-semibold flex justify-center space-y-4">
                 <div className="cflex">
-                  <FaRegCircle className="size-5 font-bold" />
+                  <FaRegCircle className="size-2 xl:size-5 font-bold" />
                 </div>
                 <div className="cflex">C</div>
               </div>
             </div>
-            <div className="w-[30%] h-full flex-col flex justify-center text-2xl">
+            <div className="lg:w-[30%] w-full h-full lg:flex-col  flex justify-center lg:text-2xl">
               <div className="flex justify-start items-center w-full">
                 <FaLongArrowAltUp className="text-red-500" />
                 {tempConv(temp_max)}° C
               </div>
-              <div className="flex justify-start items-center mt-6 w-full">
+              <div className="flex justify-start items-center lg:mt-6 w-full">
                 <FaLongArrowAltDown className="text-green-500" />{" "}
                 {tempConv(temp_min)}° C
               </div>
             </div>
           </div>
-          <div className="text-3xl h-1/4 flex items-center font-light px-3 bg-blue-600">
+          <div className="lg:text-3xl text-lg h-full lg:h-1/4 flex items-center font-light px-2 bg-blue-600">
             <FaThermometerHalf />
-            Feels like {tempConv(feels_like)}°C
+            <div className="ml-2">Feels like {tempConv(feels_like)}°C</div>
           </div>
         </div>
-        <div className="w-full  h-1/3 cflex flex-col bg-blue-400 dark:text-white ">
-          <div className="text-4xl w-full flex px-4 font-semibold">
+        <div className="w-full h-full lg:h-1/3 cflex flex-col bg-blue-400 dark:text-white ">
+          <div className="xl:text-4xl w-full flex px-4 font-semibold text-2xl">
             {descHeading}
           </div>
-          <div className="text-2xl w-full flex px-4">{description}</div>
+          <div className="text-xl lg:text-2xl w-full flex px-4">
+            {description}
+          </div>
         </div>
       </div>
-      <div className=" h-full w-2/3 flex flex-col">
+      <div className=" h-full w-full lg:w-2/3 flex flex-col">
         <div className="w-full  h-1/3 p-4 bg-black text-white flex justify-between items-center">
-          <span className="flex justify-start items-center font-semibold text-4xl w-full ">
+          <span className="flex justify-start items-center font-semibold text-xl lg:text-4xl w-full ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-14 mr-3 -mt-1"
+              className="size-10 lg:size-14 mr-3 -mt-1"
             >
               <path
                 strokeLinecap="round"
@@ -108,7 +110,7 @@ export const WeatherCard = ({
               {name}, {coutryCode}
             </span>
           </span>
-          <span className=" h-full flex justify-end items-center w-40">
+          <span className=" h-full flex justify-end items-center w-[50%]">
             {/* {Latitude & Longiture} */}
             <CiGlobe className="size-8 mr-2" />
             <div className="flex flex-col ">
@@ -117,7 +119,7 @@ export const WeatherCard = ({
             </div>
           </span>
         </div>
-        <div className="w-full grid grid-cols-2  h-2/3 text-2xl bg-white dark:bg-darkbg dark:text-white  text-gray-800">
+        <div className="w-full grid grid-cols-2  h-2/3 text-lg xl:text-2xl bg-white dark:bg-darkbg dark:text-white  text-gray-800">
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <BsSunrise className={"size-8"} />
