@@ -523,10 +523,12 @@ function Main() {
   const [data, setData] = useState<City[]>([]);
   const [loading, setLoading] = useState(false);
   const handleSearch = async (searchTerm: string) => {
-    const res = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=e47a80086b7f65b121c000fdb2e36153`
-    );
-    const resData = (await res.json()).map((item: ICityFromAPI) => {
+    const res = (
+      await axios.get(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=e47a80086b7f65b121c000fdb2e36153`
+      )
+    ).data as ICityFromAPI[];
+    const resData = res.map((item: ICityFromAPI) => {
       const idCity = item.lat + item.lon;
       return { ...item, id: idCity };
     }) as City[];
