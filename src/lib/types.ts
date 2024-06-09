@@ -1,4 +1,45 @@
-export type WeatherApiResponse = {
+type ISideBarProps = {
+  savedCityCoordinates: ICityFromAPI[];
+  visibleCities: ICityFromAPI[];
+  selectedCity: ISelectedCity | null;
+  query: string;
+  setQuery: (query: string) => void;
+  data: City[];
+  loading: boolean;
+  setSelectedCity: (city: ISelectedCity) => void;
+  setSavedCityCoordinates: (city: ICityFromAPI[]) => void;
+  setVisibleCities: (city: ICityFromAPI[]) => void;
+};
+type City = {
+  id: number;
+  name: string;
+  state: string;
+  country: string;
+  lon: number;
+  lat: number;
+};
+
+type ICityFromAPI = {
+  name: string;
+  lat: number;
+  lon: number;
+  country: string;
+  state: string;
+};
+
+type ISearchBox = {
+  isLoading: boolean;
+  query: string;
+  setQuery: (query: string) => void;
+  searchedData: City[];
+  handlePinThisCity: (city: City) => void;
+};
+type ISelectedCity = {
+  lat: number;
+  long: number;
+};
+
+type IWeatherData = {
   coord: {
     lon: number;
     lat: number;
