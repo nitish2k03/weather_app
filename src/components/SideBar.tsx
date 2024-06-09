@@ -22,7 +22,7 @@ const RealTimeClock = () => {
     <div>
       Date : {date}
       <br />
-      {/* Time : {time} */}
+      Time : {time}
     </div>
   );
 };
