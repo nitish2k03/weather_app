@@ -69,7 +69,6 @@ const SideBar = ({
           isLoading={loading}
           handlePinThisCity={handlePinThisCity}
         />
-        {/* {selectedC  ity ? <div>{selectedCity.lat}</div> : <div>no data</div>} */}
       </div>
       <div className="h-[78%] flex-col flex px-3 pt-3">
         <div className="font-bold border-b-2 border-gray-500 pb-2">
@@ -110,8 +109,6 @@ const SideBar = ({
                   Delete
                 </button>
               </div>
-              {/* <div>{city.lat}</div>
-              <div>{city.lon}</div> */}
             </div>
           ))}
         </div>
@@ -146,67 +143,18 @@ function Main() {
     setData(resData);
   };
 
-  // const [selectedCity,setSelectedCity] = useState<ISelectedCity | null>(null)
   const [currentCity, setCurrentCity] = useState<ICityFromAPI | null>(null);
   const [visibleCities, setVisibleCities] = useState<ICityFromAPI[]>([]);
   const [savedCityCoordinates, setSavedCityCoordinates] = useState<
     ICityFromAPI[]
-  >([
-    // {
-    //   name: "Delhi",
-    //   lat: 28.6667,
-    //   lon: 77.2167,
-    //   country: "IN",
-    //   state: "DL",
-    // },
-    // {
-    //   name: "Mumbai",
-    //   lat: 19.0144,
-    //   lon: 72.8479,
-    //   country: "IN",
-    //   state: "MH",
-    // },
-    // {
-    //   name: "Bangalore",
-    //   lat: 12.9762,
-    //   lon: 77.6033,
-    //   country: "IN",
-    //   state: "KA",
-    // },
-    // {
-    //   name: "Kolkata",
-    //   lat: 22.5411,
-    //   lon: 88.3378,
-    //   country: "IN",
-    //   state: "WB",
-    // },
-  ]);
+  >([]);
 
   useEffect(() => {
-    // console.log("visibleCities", visibleCities);
     // if city not in saved city it should be removed from visible cities as well
     setVisibleCities(
       visibleCities.filter((city) => isCityInArray(city, savedCityCoordinates))
     );
-    // if()
   }, [savedCityCoordinates]);
-
-  // const [wData, setWData] = useState<IWeatherData | null>(null);
-  // useEffect(() => {
-  //   if (selectedCity) setWData(fetchData(selectedCity.lat, selectedCity.long));
-  // }, [selectedCity]);
-  // const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
-  //   return (
-  //     await axios.get(
-  //       `https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
-  //     )
-  //   ).data as IWeatherData;
-  // };
-
-  // const { data: weatherData, isLoading: isLoadingWeatherData } = useQuery({
-  //   queryKey: ["weather", data],
-  //   queryFn: () => fetchWeatherDataBasedOnLatLon(data[0].lat, data[0].lon),
-  // });
 
   useEffect(() => {
     if (!debouncedSearchTerm) return;
@@ -231,9 +179,6 @@ function Main() {
 
       <div className="flex flex-col w-full px-[50px] space-y-5 h-full overflow-y-auto">
         <div className="h-5 w-ful"></div>
-        {/* {data.length > 0 && (
-          <WeatherCardWrapper lat={data[0].lat} lon={data[0].lon} />
-          )} */}
         {visibleCities.map((city, index) => (
           <WeatherCardWrapper
             key={`${city.lat}-${index}`}
@@ -242,22 +187,6 @@ function Main() {
             cityName={city.name}
           />
         ))}
-        {/* <div>
-          Saved City With Coordinates:
-          {savedCityCoordinates.map((city, index) => (
-            <div key={`${city.lat}-${index}`}>
-            {city.name}, {city.lat}, {city.lon}
-            </div>
-            ))}
-            </div>
-            <div>
-            Visible City With Coordinates:
-            {visibleCities.map((city, index) => (
-              <div key={`${city.lat}-${index}`}>
-              {city.name}, {city.lat}, {city.lon}
-              </div>
-              ))}
-              </div> */}
       </div>
     </main>
   );
