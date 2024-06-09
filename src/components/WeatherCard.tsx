@@ -1,7 +1,7 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { BsCloudSun, BsSunrise, BsSunset } from "react-icons/bs";
 import { WiFog, WiHumidity } from "react-icons/wi";
 import { CiGlobe } from "react-icons/ci";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { Rubik } from "next/font/google";
 import {
   FaCloudRain,
@@ -161,6 +161,10 @@ export const WeatherCard = ({
   );
 };
 
+const WeatherCardSkeleton = () => {
+  return <Skeleton className="h-[400px] w-full rounded-xl bg-gray-200" />;
+};
+
 export const WeatherCardWrapper = (data: {
   lat: number;
   lon: number;
@@ -178,7 +182,12 @@ export const WeatherCardWrapper = (data: {
     queryKey: ["weather", data],
     queryFn: () => fetchWeatherDataBasedOnLatLon(data.lat, data.lon),
   });
-  if (isLoadingWeatherData) return <LoadingSpinner />;
+  if (isLoadingWeatherData)
+    return (
+      <div className="cflex w-full">
+        <WeatherCardSkeleton />
+      </div>
+    );
   if (!weatherData) return <>Undefined</>;
   return (
     <WeatherCard
