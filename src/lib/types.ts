@@ -86,3 +86,23 @@ type IWeatherData = {
   name: string;
   cod: number;
 };
+type IWeatherCard = {
+  coutryCode: string;
+  lon: number;
+  lat: number;
+  descHeading: string;
+  description: string;
+  icon: string;
+  temp: number;
+  feels_like: number;
+  temp_min: number;
+  temp_max: number;
+  humidity: number;
+  windSpeed: number;
+  id: number;
+  name: string;
+  sunrise: number;
+  sunset: number;
+  visibility: number;
+  clouds: number;
+};
