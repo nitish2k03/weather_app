@@ -9,10 +9,14 @@ import {
   FaLongArrowAltUp,
   FaRegCircle,
   FaThermometerHalf,
+  FaWind,
 } from "react-icons/fa";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { config } from "@/lib/utils";
+const tempConv = (temp: number) => {
+  return Math.round(temp - 273);
+};
 
 const RubikFont = Rubik({
   subsets: ["latin"],
@@ -46,7 +50,7 @@ export const WeatherCard = ({
           <div className="w-full h-3/4 flex bg-indigo-600">
             <div className=" w-3/4 h-full flex justify-start items-center">
               <div className=" h-full w-[70%] text-9xl pl-6 font-extrabold flex justify-center items-center">
-                {temp}
+                {tempConv(temp)}
               </div>
               <div className=" flex-col w-1/4 text-6xl font-semibold flex justify-center space-y-4">
                 <div className="cflex">
@@ -58,16 +62,17 @@ export const WeatherCard = ({
             <div className="w-[30%] h-full flex-col flex justify-center text-2xl">
               <div className="flex justify-start items-center w-full">
                 <FaLongArrowAltUp className="text-red-500" />
-                {temp_max}° C
+                {tempConv(temp_max)}° C
               </div>
               <div className="flex justify-start items-center mt-6 w-full">
-                <FaLongArrowAltDown className="text-green-500" /> {temp_min}° C
+                <FaLongArrowAltDown className="text-green-500" />{" "}
+                {tempConv(temp_min)}° C
               </div>
             </div>
           </div>
           <div className="text-3xl h-1/4 flex items-center font-light px-3 bg-blue-600">
             <FaThermometerHalf />
-            Feels like {feels_like}°C
+            Feels like {tempConv(feels_like)}°C
           </div>
         </div>
         <div className="w-full  h-1/3 cflex flex-col bg-blue-400">
@@ -118,42 +123,46 @@ export const WeatherCard = ({
               <BsSunrise className={"size-8"} />
             </span>
             {/* <span className="heading">Sunrise</span> */}
-            <span className="value">{sunrise}</span>
+            <span className="value">
+              {new Date(sunrise).toLocaleTimeString()}
+            </span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <BsSunset className={"size-8"} />
             </span>
             {/* <span className="heading">Sunset</span> */}
-            <span className="value">{sunset}</span>
+            <span className="value">
+              {new Date(sunset).toLocaleTimeString()}
+            </span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
-              <FaCloudRain className={"size-8"} />
+              <FaWind className={"size-8"} />
             </span>
             {/* <span className="heading">WindSpeed</span> */}
-            <span className="value">{windSpeed}</span>
+            <span className="value">{windSpeed} m/s</span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <BsCloudSun className={"size-8"} />
             </span>
             {/* <span className="heading">Clouds</span> */}
-            <span className="value">{clouds}</span>
+            <span className="value">{clouds} %</span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <WiFog className={"size-8"} />
             </span>
             {/* <span className="heading">Visibility</span> */}
-            <span className="value">{visibility}</span>
+            <span className="value">{visibility} m</span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <WiHumidity className={"size-10"} />
             </span>
             {/* <span className="heading">Humidity</span> */}
-            <span className="value">{humidity}</span>
+            <span className="value">{humidity} %</span>
           </div>
         </div>
       </div>
@@ -197,7 +206,7 @@ export const WeatherCardWrapper = (data: {
       descHeading={weatherData.weather[0].main}
       description={weatherData.weather[0].description}
       icon={weatherData.weather[0].icon}
-      temp={Math.round(weatherData.main.temp - 273)}
+      temp={weatherData.main.temp}
       feels_like={weatherData.main.feels_like}
       temp_min={weatherData.main.temp_min}
       temp_max={weatherData.main.temp_max}
