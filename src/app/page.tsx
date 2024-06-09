@@ -36,7 +36,8 @@ function Main() {
     }) as City[];
     setData(resData);
   };
-
+  const [localStorageGetterSetterDone, setLocalStorageGetterSetterDone] =
+    useState(false);
   const [currentCity, setCurrentCity] = useState<ICityFromAPI | null>(null);
   const [visibleCities, setVisibleCities] = useState<ICityFromAPI[]>([]);
   const [savedCityCoordinates, setSavedCityCoordinates] = useState<
@@ -44,10 +45,14 @@ function Main() {
   >([]);
 
   useEffect(() => {
-    // if city not in saved city it should be removed from visible cities as well
-    setVisibleCities(
-      visibleCities.filter((city) => isCityInArray(city, savedCityCoordinates))
-    );
+    if (localStorageGetterSetterDone) {
+      // if city not in saved city it should be removed from visible cities as well
+      setVisibleCities(
+        visibleCities.filter((city) =>
+          isCityInArray(city, savedCityCoordinates)
+        )
+      );
+    }
   }, [savedCityCoordinates]);
 
   useEffect(() => {
@@ -56,6 +61,36 @@ function Main() {
     handleSearch(debouncedSearchTerm);
     setLoading(false);
   }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    //store savedcitycoordinates and visiblecities in localstorage
+    if (localStorageGetterSetterDone) {
+      localStorage.setItem(
+        "savedCityCoordinates",
+        JSON.stringify(savedCityCoordinates)
+      );
+      localStorage.setItem("visibleCities", JSON.stringify(visibleCities));
+    }
+  }, [savedCityCoordinates, visibleCities]);
+
+  //get the saved city coordinates from localstorage on page load
+  useEffect(() => {
+    if (window.location !== undefined && !localStorageGetterSetterDone) {
+      console.log("getting data from localstorage");
+      const savedCityCoordinates = JSON.parse(
+        localStorage.getItem("savedCityCoordinates") || "[]"
+      ) as ICityFromAPI[];
+      const visibleCities = JSON.parse(
+        localStorage.getItem("visibleCities") || "[]"
+      ) as ICityFromAPI[];
+      console.log("Saved: ", savedCityCoordinates, "Visble: ", visibleCities);
+      setSavedCityCoordinates(savedCityCoordinates);
+      setVisibleCities(visibleCities);
+      setLocalStorageGetterSetterDone(true);
+    } else {
+      console.log("window.location is undefined");
+    }
+  }, []);
   return (
     <main className="h-screen w-screen flex">
       <SideBar
