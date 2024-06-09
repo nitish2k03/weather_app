@@ -389,7 +389,7 @@ const WeatherCardWrapper = (data: {
   const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
     return (
       await axios.get(
-        `https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
+        `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
       )
     ).data as IWeatherData;
   };
