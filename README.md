@@ -10,7 +10,7 @@
   - [x] Longitude
   - [x] Humidity
   - [x] Wind Speed
-  - [ ] Date & Time
+  - [x] Date & Time
 - [ ] Multiple Locations
 - [ ] Dark Mode Toggle
 
