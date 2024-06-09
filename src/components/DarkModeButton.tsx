@@ -12,11 +12,19 @@ const DarkModeButton = () => {
   }, [darkMode]);
   return (
     <div>
-      <input type="checkbox" className="checkbox shadow-xl" id="checkbox" />
-      <label htmlFor="checkbox" className="checkbox-label drop-shadow-lg">
-        <FaMoon className="text-gray-200" />
+      <input
+        type="checkbox"
+        className="checkbox shadow-xl"
+        id="checkbox"
+        onClick={() => setDarkMode(!darkMode)}
+      />
+      <label
+        htmlFor="checkbox"
+        className="checkbox-label drop-shadow-lg dark:bg-white"
+      >
+        <FaMoon className="text-gray-600" />
         <FaSun className="text-yellow-500" />
-        <span className="ball"></span>
+        <span className="ball dark:bg-black"></span>
       </label>
     </div>
   );
