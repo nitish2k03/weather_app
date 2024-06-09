@@ -22,12 +22,16 @@ import {
 import Image from "next/image";
 import axios from "axios";
 type ISideBarProps = {
+  savedCityCoordinates: ICityFromAPI[];
+  visibleCities: ICityFromAPI[];
   selectedCity: ISelectedCity | null;
   query: string;
   setQuery: (query: string) => void;
   data: City[];
   loading: boolean;
   setSelectedCity: (city: ISelectedCity) => void;
+  setSavedCityCoordinates: (city: ICityFromAPI[]) => void;
+  setVisibleCities: (city: ICityFromAPI[]) => void;
 };
 type City = {
   id: number;
@@ -369,6 +373,51 @@ const WeatherCard = ({
   );
 };
 
+const WeatherCardWrapper = (data: { lat: number; lon: number }) => {
+  const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
+    return (
+      await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
+      )
+    ).data as IWeatherData;
+  };
+  const { data: weatherData, isLoading: isLoadingWeatherData } = useQuery({
+    queryKey: ["weather", data],
+    queryFn: () => fetchWeatherDataBasedOnLatLon(data.lat, data.lon),
+  });
+  if (isLoadingWeatherData) return <LoadingSpinner />;
+  if (!weatherData) return <>Undefined</>;
+  return (
+    <WeatherCard
+      lon={weatherData.coord.lon}
+      lat={weatherData.coord.lat}
+      descHeading={weatherData.weather[0].main}
+      description={weatherData.weather[0].description}
+      icon={weatherData.weather[0].icon}
+      temp={Math.round(weatherData.main.temp - 273)}
+      feels_like={weatherData.main.feels_like}
+      temp_min={weatherData.main.temp_min}
+      temp_max={weatherData.main.temp_max}
+      humidity={weatherData.main.humidity}
+      windSpeed={weatherData.wind.speed}
+      id={weatherData.id}
+      name={weatherData.name}
+      sunrise={weatherData.sys.sunrise}
+      sunset={weatherData.sys.sunset}
+      visibility={weatherData.visibility}
+      clouds={weatherData.clouds.all}
+    />
+  );
+};
+
+const isCittySame = (city1: ICityFromAPI, city2: ICityFromAPI) => {
+  return city1.lat === city2.lat && city1.lon === city2.lon;
+};
+
+const isCityInArray = (city: ICityFromAPI, cities: ICityFromAPI[]) => {
+  return cities.some((item) => isCittySame(item, city));
+};
+
 const SideBar = ({
   query,
   setQuery,
@@ -376,6 +425,10 @@ const SideBar = ({
   loading,
   data,
   selectedCity,
+  savedCityCoordinates,
+  visibleCities,
+  setSavedCityCoordinates,
+  setVisibleCities,
 }: ISideBarProps) => {
   return (
     <div className="border-r-2 border-black w-[300px]">
@@ -389,7 +442,51 @@ const SideBar = ({
         />
         {selectedCity ? <div>{selectedCity.lat}</div> : <div>no data</div>}
       </div>
-      <div className="h-[78%]">Pinned Locations</div>
+      <div className="h-[78%] flex-col flex px-3 pt-3">
+        <div className="font-bold border-b-2 border-gray-500 pb-2">
+          Pinned Locations
+        </div>
+        <div className="flex flex-col text-black">
+          {savedCityCoordinates.map((city, index) => (
+            <div
+              key={`${city.lat}-${index}`}
+              className="flex justify-between items-center bg-gray-300 mt-1 p-2 rounded"
+            >
+              <div>{city.name}</div>
+              <div className="flex text-xs">
+                <button
+                  onClick={() => {
+                    // if city is already visible then remove it
+                    if (isCityInArray(city, visibleCities)) {
+                      setVisibleCities(
+                        visibleCities.filter((item) => item !== city)
+                      );
+                    } else {
+                      setVisibleCities([...visibleCities, city]);
+                    }
+                  }}
+                  className="bg-green-500 rounded text-xs px-2 py-1"
+                >
+                  {/* SHow Hide Icon */}
+                  {isCityInArray(city, visibleCities) ? "Hide" : "Show"}
+                </button>
+                <button
+                  className="bg-red-500 rounded text-xs px-2 py-1 ml-2"
+                  onClick={() => {
+                    setSavedCityCoordinates(
+                      savedCityCoordinates.filter((item) => item !== city)
+                    );
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+              {/* <div>{city.lat}</div>
+              <div>{city.lon}</div> */}
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="border-t-2 border-black px-2">
         <RealTimeClock />
       </div>
@@ -407,7 +504,8 @@ export default function Home() {
 
 export function App() {
   useState(false);
-  const [selectedCity, setSelectedCity] = useState<ISelectedCity | null>(null);
+  const [currentSearchedCity, setCurrentSearchedCity] =
+    useState<ISelectedCity | null>(null);
   //fetch data from api
   const [query, setQuery] = useState("");
   const debouncedSearchTerm = useDebounce(query, 300);
@@ -423,22 +521,63 @@ export function App() {
     }) as City[];
     setData(resData);
   };
-  const [wData, setWData] = useState<IWeatherData | null>(null);
+
+  // const [selectedCity,setSelectedCity] = useState<ISelectedCity | null>(null)
+  const [currentCity, setCurrentCity] = useState<ICityFromAPI | null>(null);
+  const [visibleCities, setVisibleCities] = useState<ICityFromAPI[]>([]);
+  const [savedCityCoordinates, setSavedCityCoordinates] = useState<
+    ICityFromAPI[]
+  >([
+    {
+      name: "Delhi",
+      lat: 28.6667,
+      lon: 77.2167,
+      country: "IN",
+      state: "DL",
+    },
+    {
+      name: "Mumbai",
+      lat: 19.0144,
+      lon: 72.8479,
+      country: "IN",
+      state: "MH",
+    },
+    {
+      name: "Bangalore",
+      lat: 12.9762,
+      lon: 77.6033,
+      country: "IN",
+      state: "KA",
+    },
+    {
+      name: "Kolkata",
+      lat: 22.5411,
+      lon: 88.3378,
+      country: "IN",
+      state: "WB",
+    },
+  ]);
+
+  useEffect(() => {
+    console.log("visibleCities", visibleCities);
+  }, [visibleCities]);
+
+  // const [wData, setWData] = useState<IWeatherData | null>(null);
   // useEffect(() => {
   //   if (selectedCity) setWData(fetchData(selectedCity.lat, selectedCity.long));
   // }, [selectedCity]);
-  const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
-    return (
-      await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
-      )
-    ).data as IWeatherData;
-  };
+  // const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
+  //   return (
+  //     await axios.get(
+  //       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
+  //     )
+  //   ).data as IWeatherData;
+  // };
 
-  const { data: weatherData, isLoading: isLoadingWeatherData } = useQuery({
-    queryKey: ["weather", data],
-    queryFn: () => fetchWeatherDataBasedOnLatLon(data[0].lat, data[0].lon),
-  });
+  // const { data: weatherData, isLoading: isLoadingWeatherData } = useQuery({
+  //   queryKey: ["weather", data],
+  //   queryFn: () => fetchWeatherDataBasedOnLatLon(data[0].lat, data[0].lon),
+  // });
 
   useEffect(() => {
     if (!debouncedSearchTerm) return;
@@ -447,41 +586,49 @@ export function App() {
     setLoading(false);
   }, [debouncedSearchTerm]);
   return (
-    <QueryClientProvider client={queryClient}>
-      <main className="h-screen w-screen flex">
-        <SideBar
-          query={query}
-          setQuery={setQuery}
-          setSelectedCity={setSelectedCity}
-          selectedCity={selectedCity}
-          loading={loading}
-          data={data}
-        />
-        {weatherData && (
-          <div className="flex flex-col w-full px-[50px] space-y-5 h-full overflow-y-auto">
-            <div className="h-5 w-ful"></div>
-            <WeatherCard
-              lon={weatherData?.coord.lon}
-              lat={weatherData.coord.lat}
-              descHeading={weatherData.weather[0].main}
-              description={weatherData.weather[0].description}
-              icon={weatherData.weather[0].icon}
-              temp={Math.round(weatherData.main.temp - 273)}
-              feels_like={weatherData.main.feels_like}
-              temp_min={weatherData.main.temp_min}
-              temp_max={weatherData.main.temp_max}
-              humidity={weatherData.main.humidity}
-              windSpeed={weatherData.wind.speed}
-              id={weatherData.id}
-              name={weatherData.name}
-              sunrise={weatherData.sys.sunrise}
-              sunset={weatherData.sys.sunset}
-              visibility={weatherData.visibility}
-              clouds={weatherData.clouds.all}
-            />
-          </div>
+    <main className="h-screen w-screen flex">
+      <SideBar
+        query={query}
+        setQuery={setQuery}
+        setSelectedCity={setCurrentSearchedCity}
+        selectedCity={currentSearchedCity}
+        loading={loading}
+        data={data}
+        savedCityCoordinates={savedCityCoordinates}
+        visibleCities={visibleCities}
+        setSavedCityCoordinates={setSavedCityCoordinates}
+        setVisibleCities={setVisibleCities}
+      />
+
+      <div className="flex flex-col w-full px-[50px] space-y-5 h-full overflow-y-auto">
+        <div className="h-5 w-ful"></div>
+        {data.length > 0 && (
+          <WeatherCardWrapper lat={data[0].lat} lon={data[0].lon} />
         )}
-      </main>
-    </QueryClientProvider>
+        {visibleCities.map((city, index) => (
+          <WeatherCardWrapper
+            key={`${city.lat}-${index}`}
+            lat={city.lat}
+            lon={city.lon}
+          />
+        ))}
+        {/* <div>
+          Saved City With Coordinates:
+          {savedCityCoordinates.map((city, index) => (
+            <div key={`${city.lat}-${index}`}>
+              {city.name}, {city.lat}, {city.lon}
+            </div>
+          ))}
+        </div>
+        <div>
+          Visible City With Coordinates:
+          {visibleCities.map((city, index) => (
+            <div key={`${city.lat}-${index}`}>
+              {city.name}, {city.lat}, {city.lon}
+            </div>
+          ))}
+        </div> */}
+      </div>
+    </main>
   );
 }
