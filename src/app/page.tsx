@@ -328,7 +328,7 @@ const WeatherCard = ({
             <CiGlobe className="size-8 mr-2" />
             <div className="flex flex-col ">
               <span>{lat} °</span>
-              <span>{lon} '</span>
+              <span>{lon} &apos;</span>
             </div>
           </span>
         </div>
