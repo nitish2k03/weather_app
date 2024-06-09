@@ -1,10 +1,12 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { BsCloudSun, BsSunrise, BsSunset } from "react-icons/bs";
-import { TiPinOutline } from "react-icons/ti";
-// import { TbWorldLatitude, TbWorldLongitude } from "react-icons/tb";
+import { WiFog, WiHumidity } from "react-icons/wi";
+
+import SearchBox from "@/components/SearchBox";
 import { CiGlobe } from "react-icons/ci";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import {
   FaCloudRain,
   FaLongArrowAltDown,
@@ -12,104 +14,14 @@ import {
   FaRegCircle,
   FaThermometerHalf,
 } from "react-icons/fa";
-import { WiDegrees, WiFog, WiHumidity } from "react-icons/wi";
-import { createPortal } from "react-dom";
 import { Rubik } from "next/font/google";
 import {
   QueryClient,
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
-import Image from "next/image";
-import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
-type ISideBarProps = {
-  savedCityCoordinates: ICityFromAPI[];
-  visibleCities: ICityFromAPI[];
-  selectedCity: ISelectedCity | null;
-  query: string;
-  setQuery: (query: string) => void;
-  data: City[];
-  loading: boolean;
-  setSelectedCity: (city: ISelectedCity) => void;
-  setSavedCityCoordinates: (city: ICityFromAPI[]) => void;
-  setVisibleCities: (city: ICityFromAPI[]) => void;
-};
-type City = {
-  id: number;
-  name: string;
-  state: string;
-  country: string;
-  lon: number;
-  lat: number;
-};
+import axios, { AxiosRequestConfig } from "axios";
 
-type ICityFromAPI = {
-  name: string;
-  lat: number;
-  lon: number;
-  country: string;
-  state: string;
-};
-
-type ISearchBox = {
-  isLoading: boolean;
-  query: string;
-  setQuery: (query: string) => void;
-  searchedData: City[];
-  handlePinThisCity: (city: City) => void;
-};
-type ISelectedCity = {
-  lat: number;
-  long: number;
-};
-
-type IWeatherData = {
-  coord: {
-    lon: number;
-    lat: number;
-  };
-  weather: {
-    id: number;
-    main: string;
-    description: string;
-    icon: string;
-  }[];
-  base: string;
-  main: {
-    temp: number;
-    feels_like: number;
-    temp_min: number;
-    temp_max: number;
-    pressure: number;
-    humidity: number;
-    sea_level: number;
-    grnd_level: number;
-  };
-  visibility: number;
-  wind: {
-    speed: number;
-    deg: number;
-    gust: number;
-  };
-  rain?: {
-    "1h": number;
-  };
-  clouds: {
-    all: number;
-  };
-  dt: number;
-  sys: {
-    type: number;
-    id: number;
-    country: string;
-    sunrise: number;
-    sunset: number;
-  };
-  timezone: number;
-  id: number;
-  name: string;
-  cod: number;
-};
 const queryClient = new QueryClient();
 const RubikFont = Rubik({
   subsets: ["latin"],
@@ -127,88 +39,6 @@ const config: AxiosRequestConfig = {
     "Accept-Encoding": "gzip, deflate, br, zstd",
     "Accept-Language": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7",
   },
-};
-
-const LoadingSpinner = () => {
-  return (
-    <div
-      className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-blue-300 motion-reduce:animate-[spin_1.5s_linear_infinite]"
-      role="status"
-    >
-      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-        Loading...
-      </span>
-    </div>
-  );
-};
-const SearchBox = ({
-  query,
-  searchedData,
-  setQuery,
-  isLoading,
-  handlePinThisCity,
-}: ISearchBox) => {
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  return (
-    <div className="relative w-full flex-col flex bg-white text-black rounded border-2 border-black">
-      <div className="flex justify-start items-center ">
-        <div className="flex justify-center items-center w-[50px] ">
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
-          )}
-        </div>
-        <input
-          onFocus={() => setShowSuggestions(true)}
-          className="w-full rounded px-3 py-2 focus:outline-none bg-gray-100/50"
-          onChange={(e) => setQuery(e.target.value)}
-          onBlur={() => setTimeout(() => setShowSuggestions(false), 1000)}
-        ></input>
-        <div></div>
-      </div>
-      {showSuggestions && (
-        <div className="z-30 absolute mt-14 w-full bg-white border-2 border-black">
-          {searchedData.length <= 0 && (
-            <div className="w-full px-3 py-1 bg-white">No Data</div>
-          )}
-          {searchedData.length > 0 && (
-            <div className="w-full  flex flex-col rounded bg-white ">
-              {searchedData.map((city, index) => (
-                <div
-                  className="px-3 rounded hover:bg-blue-300 hover:cursor-pointer group flex justify-between"
-                  key={`${city.id}-${index}`}
-                  onClick={() => {
-                    handlePinThisCity(city);
-                    setShowSuggestions(false);
-                  }}
-                >
-                  {city.name}, {city.state ? city.state + ", " : ""}
-                  {city.country}
-                  <div className="hidden group-hover:flex justify-center items-center">
-                    <TiPinOutline />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
 };
 
 const RealTimeClock = () => {
