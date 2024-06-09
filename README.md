@@ -2,7 +2,7 @@
 
 ## Functionality:
 
-- [ ] Search Bar
+- [x] Search Bar
 - [ ] Info to Provide:
   - [x] City
   - [x] Temperature
@@ -10,9 +10,11 @@
   - [x] Longitude
   - [x] Humidity
   - [x] Wind Speed
-  - [x] Date & Time
-- [ ] Multiple Locations
+  - [ ] Date & Time
+- [x] Multiple Locations
 - [ ] Dark Mode Toggle
+- [ ] Componenet Refactoring Into
+- [ ] Local Storage (Saved Locations, Visible Locations)
 
 ## CSS Styling:
 
