@@ -4,12 +4,12 @@
 
 - [ ] Search Bar
 - [ ] Info to Provide:
-  - [ ] City
-  - [ ] Temperature
-  - [ ] Latitude
-  - [ ] Longitude
-  - [ ] Humidity
-  - [ ] Wind Speed
+  - [x] City
+  - [x] Temperature
+  - [x] Latitude
+  - [x] Longitude
+  - [x] Humidity
+  - [x] Wind Speed
   - [ ] Date & Time
 - [ ] Multiple Locations
 - [ ] Dark Mode Toggle
