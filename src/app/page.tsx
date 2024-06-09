@@ -367,54 +367,6 @@ const WeatherCard = () =>
     );
   };
 
-const Main = (props: ISelectedCity) => {
-  const { lat, long } = props;
-  // fetching data
-  const fetchData = async (lat: number, long: number) => {
-    return (
-      await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
-      )
-    ).data as IWeatherData;
-  };
-  const { data: weatherData, isLoading: isLoadingWeatherData } = useQuery({
-    queryKey: ["weather", lat, long],
-    queryFn: () => fetchData(lat, long),
-  });
-  const myLoader = ({ src }: { src: string }) => {
-    if (!weatherData) return "";
-    return `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
-  };
-  if (isLoadingWeatherData) return <div>Loading...</div>;
-  return (
-    <>
-      {weatherData && (
-        <div>
-          <div>{weatherData.name}</div>
-          <div>Lattitude: {lat.toFixed(2)}</div>
-          <div>Longitude: {long.toFixed(2)}</div>
-          <div>
-            {weatherData.weather[0].main} - {weatherData.weather[0].description}
-          </div>
-          <div>{Math.round(weatherData.main.temp - 273)}° C </div>
-          <Image
-            loader={myLoader}
-            src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`}
-            width={50}
-            height={50}
-            alt=""
-          />
-          <div>{weatherData.wind.speed}</div>
-          <div>{weatherData.main.humidity}</div>
-          <div className="">
-            <RealTimeClock />
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
-
 const SideBar = ({
   query,
   setQuery,
