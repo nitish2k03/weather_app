@@ -21,7 +21,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import Image from "next/image";
-import axios from "axios";
+import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
 type ISideBarProps = {
   savedCityCoordinates: ICityFromAPI[];
   visibleCities: ICityFromAPI[];
@@ -114,6 +114,20 @@ const queryClient = new QueryClient();
 const RubikFont = Rubik({
   subsets: ["latin"],
 });
+
+const config: AxiosRequestConfig = {
+  headers: {
+    Host: "api.openweathermap.org",
+    Origin: "https://weather-r6p26eu9y-nitish2k03s-projects.vercel.app",
+    Referer: "https://weather-r6p26eu9y-nitish2k03s-projects.vercel.app/",
+    Accept: "application/json, text/plain, */*",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "cross-site",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Accept-Language": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7",
+  },
+};
 
 const LoadingSpinner = () => {
   return (
@@ -389,7 +403,8 @@ const WeatherCardWrapper = (data: {
   const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
     return (
       await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e47a80086b7f65b121c000fdb2e36153`,
+        config
       )
     ).data as IWeatherData;
   };
@@ -525,7 +540,8 @@ function Main() {
   const handleSearch = async (searchTerm: string) => {
     const res = (
       await axios.get(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=e47a80086b7f65b121c000fdb2e36153`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=e47a80086b7f65b121c000fdb2e36153`,
+        config
       )
     ).data as ICityFromAPI[];
     const resData = res.map((item: ICityFromAPI) => {
