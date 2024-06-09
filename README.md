@@ -3,7 +3,7 @@
 ## Functionality:
 
 - [x] Search Bar
-- [ ] Info to Provide:
+- [x] Info to Provide:
   - [x] City
   - [x] Temperature
   - [x] Latitude
@@ -15,7 +15,7 @@
 - [x] Componenet Refactoring Into
 - [x] Local Storage (Saved Locations, Visible Locations)
 - [ ] Dark Mode Toggle
-- [ ] Pinning locatioin duplicacy
+- [x] Pinning locatioin duplicacy
 - [x] Fix metrics on weather card
 
 ## CSS Styling:
