@@ -513,15 +513,7 @@ const SideBar = ({
   );
 };
 
-export default function Home() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  );
-}
-
-export function App() {
+function Main() {
   useState(false);
   const [currentSearchedCity, setCurrentSearchedCity] =
     useState<ISelectedCity | null>(null);
@@ -628,7 +620,7 @@ export function App() {
         <div className="h-5 w-ful"></div>
         {/* {data.length > 0 && (
           <WeatherCardWrapper lat={data[0].lat} lon={data[0].lon} />
-        )} */}
+          )} */}
         {visibleCities.map((city, index) => (
           <WeatherCardWrapper
             key={`${city.lat}-${index}`}
@@ -641,19 +633,27 @@ export function App() {
           Saved City With Coordinates:
           {savedCityCoordinates.map((city, index) => (
             <div key={`${city.lat}-${index}`}>
-              {city.name}, {city.lat}, {city.lon}
+            {city.name}, {city.lat}, {city.lon}
             </div>
-          ))}
-        </div>
-        <div>
-          Visible City With Coordinates:
-          {visibleCities.map((city, index) => (
-            <div key={`${city.lat}-${index}`}>
-              {city.name}, {city.lat}, {city.lon}
+            ))}
             </div>
-          ))}
-        </div> */}
+            <div>
+            Visible City With Coordinates:
+            {visibleCities.map((city, index) => (
+              <div key={`${city.lat}-${index}`}>
+              {city.name}, {city.lat}, {city.lon}
+              </div>
+              ))}
+              </div> */}
       </div>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Main />
+    </QueryClientProvider>
   );
 }
