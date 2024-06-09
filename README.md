@@ -12,13 +12,14 @@
   - [x] Wind Speed
   - [ ] Date & Time
 - [x] Multiple Locations
+- [x] Componenet Refactoring Into
+- [x] Local Storage (Saved Locations, Visible Locations)
 - [ ] Dark Mode Toggle
-- [ ] Componenet Refactoring Into
-- [ ] Local Storage (Saved Locations, Visible Locations)
 - [ ] Pinning locatioin duplicacy
+- [ ] Fix metrics on weather card
 
 ## CSS Styling:
 
 - [ ] Dark Mode
-- [ ] Beautify Appearance
+- [x] Beautify Appearance
 - [ ] Responsive Design
