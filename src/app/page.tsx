@@ -201,9 +201,9 @@ const RealTimeClock = () => {
   }, []);
   return (
     <div>
-      {date.toLocaleDateString()}
+      Date : {date.toLocaleDateString()}
       <br />
-      {time.toLocaleTimeString()}
+      Time : {time.toLocaleTimeString()}
     </div>
   );
 };
@@ -406,7 +406,7 @@ const Main = (props: ISelectedCity) => {
           />
           <div>{weatherData.wind.speed}</div>
           <div>{weatherData.main.humidity}</div>
-          <div>
+          <div className="">
             <RealTimeClock />
           </div>
         </div>
@@ -435,7 +435,10 @@ const SideBar = ({
         />
         {selectedCity ? <div>{selectedCity.lat}</div> : <div>no data</div>}
       </div>
-      <div>Pinned Locations</div>
+      <div className="h-[78%]">Pinned Locations</div>
+      <div className="border-t-2 border-black px-2">
+        <RealTimeClock />
+      </div>
     </div>
   );
 };
