@@ -41,6 +41,9 @@ export const SideBar = ({
 }: ISideBarProps) => {
   const handlePinThisCity = (city: City) => {
     // add this city to list of saved cities
+    if (isCityInArray(city, savedCityCoordinates)) {
+      return;
+    }
     setSavedCityCoordinates([...savedCityCoordinates, city]);
     setVisibleCities([...visibleCities, city]);
   };
