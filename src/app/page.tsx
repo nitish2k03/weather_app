@@ -127,7 +127,7 @@ const LoadingSpinner = () => {
     </div>
   );
 };
-export const SearchBox = ({
+const SearchBox = ({
   query,
   searchedData,
   setQuery,
