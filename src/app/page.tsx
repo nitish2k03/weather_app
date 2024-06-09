@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { BsCloudSun, BsSunrise, BsSunset } from "react-icons/bs";
+import { TiPinOutline } from "react-icons/ti";
 // import { TbWorldLatitude, TbWorldLongitude } from "react-icons/tb";
 import { CiGlobe } from "react-icons/ci";
 import {
@@ -55,7 +56,7 @@ type ISearchBox = {
   query: string;
   setQuery: (query: string) => void;
   searchedData: City[];
-  setSelectedCity: (city: ISelectedCity) => void;
+  handlePinThisCity: (city: City) => void;
 };
 type ISelectedCity = {
   lat: number;
@@ -131,7 +132,7 @@ export const SearchBox = ({
   searchedData,
   setQuery,
   isLoading,
-  setSelectedCity,
+  handlePinThisCity,
 }: ISearchBox) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   return (
@@ -174,15 +175,18 @@ export const SearchBox = ({
             <div className="w-full  flex flex-col rounded bg-white ">
               {searchedData.map((city, index) => (
                 <div
-                  className="px-3 rounded hover:bg-gray-300 hover:cursor-pointer"
+                  className="px-3 rounded hover:bg-blue-300 hover:cursor-pointer group flex justify-between"
                   key={`${city.id}-${index}`}
                   onClick={() => {
-                    setSelectedCity({ lat: city.lat, long: city.lon });
+                    handlePinThisCity(city);
                     setShowSuggestions(false);
                   }}
                 >
                   {city.name}, {city.state ? city.state + ", " : ""}
                   {city.country}
+                  <div className="hidden group-hover:flex justify-center items-center">
+                    <TiPinOutline />
+                  </div>
                 </div>
               ))}
             </div>
@@ -213,6 +217,7 @@ const RealTimeClock = () => {
 };
 
 type IWeatherCard = {
+  coutryCode: string;
   lon: number;
   lat: number;
   descHeading: string;
@@ -250,6 +255,7 @@ const WeatherCard = ({
   sunset,
   visibility,
   clouds,
+  coutryCode,
 }: IWeatherCard) => {
   return (
     <div
@@ -313,7 +319,9 @@ const WeatherCard = ({
                 d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
               />
             </svg>
-            <span>{name}, India</span>
+            <span>
+              {name}, {coutryCode}
+            </span>
           </span>
           <span className=" h-full flex justify-end items-center w-40">
             {/* {Latitude & Longiture} */}
@@ -373,7 +381,11 @@ const WeatherCard = ({
   );
 };
 
-const WeatherCardWrapper = (data: { lat: number; lon: number }) => {
+const WeatherCardWrapper = (data: {
+  lat: number;
+  lon: number;
+  cityName: string;
+}) => {
   const fetchWeatherDataBasedOnLatLon = async (lat: number, long: number) => {
     return (
       await axios.get(
@@ -391,6 +403,7 @@ const WeatherCardWrapper = (data: { lat: number; lon: number }) => {
     <WeatherCard
       lon={weatherData.coord.lon}
       lat={weatherData.coord.lat}
+      coutryCode={weatherData.sys.country}
       descHeading={weatherData.weather[0].main}
       description={weatherData.weather[0].description}
       icon={weatherData.weather[0].icon}
@@ -401,7 +414,7 @@ const WeatherCardWrapper = (data: { lat: number; lon: number }) => {
       humidity={weatherData.main.humidity}
       windSpeed={weatherData.wind.speed}
       id={weatherData.id}
-      name={weatherData.name}
+      name={data.cityName}
       sunrise={weatherData.sys.sunrise}
       sunset={weatherData.sys.sunset}
       visibility={weatherData.visibility}
@@ -430,6 +443,12 @@ const SideBar = ({
   setSavedCityCoordinates,
   setVisibleCities,
 }: ISideBarProps) => {
+  const handlePinThisCity = (city: City) => {
+    // add this city to list of saved cities
+    setSavedCityCoordinates([...savedCityCoordinates, city]);
+    setVisibleCities([...visibleCities, city]);
+  };
+
   return (
     <div className="border-r-2 border-black w-[300px]">
       <div className="border-b-2 border-black p-4">
@@ -438,9 +457,9 @@ const SideBar = ({
           setQuery={setQuery}
           searchedData={data}
           isLoading={loading}
-          setSelectedCity={setSelectedCity}
+          handlePinThisCity={handlePinThisCity}
         />
-        {selectedCity ? <div>{selectedCity.lat}</div> : <div>no data</div>}
+        {/* {selectedC  ity ? <div>{selectedCity.lat}</div> : <div>no data</div>} */}
       </div>
       <div className="h-[78%] flex-col flex px-3 pt-3">
         <div className="font-bold border-b-2 border-gray-500 pb-2">
@@ -528,39 +547,44 @@ export function App() {
   const [savedCityCoordinates, setSavedCityCoordinates] = useState<
     ICityFromAPI[]
   >([
-    {
-      name: "Delhi",
-      lat: 28.6667,
-      lon: 77.2167,
-      country: "IN",
-      state: "DL",
-    },
-    {
-      name: "Mumbai",
-      lat: 19.0144,
-      lon: 72.8479,
-      country: "IN",
-      state: "MH",
-    },
-    {
-      name: "Bangalore",
-      lat: 12.9762,
-      lon: 77.6033,
-      country: "IN",
-      state: "KA",
-    },
-    {
-      name: "Kolkata",
-      lat: 22.5411,
-      lon: 88.3378,
-      country: "IN",
-      state: "WB",
-    },
+    // {
+    //   name: "Delhi",
+    //   lat: 28.6667,
+    //   lon: 77.2167,
+    //   country: "IN",
+    //   state: "DL",
+    // },
+    // {
+    //   name: "Mumbai",
+    //   lat: 19.0144,
+    //   lon: 72.8479,
+    //   country: "IN",
+    //   state: "MH",
+    // },
+    // {
+    //   name: "Bangalore",
+    //   lat: 12.9762,
+    //   lon: 77.6033,
+    //   country: "IN",
+    //   state: "KA",
+    // },
+    // {
+    //   name: "Kolkata",
+    //   lat: 22.5411,
+    //   lon: 88.3378,
+    //   country: "IN",
+    //   state: "WB",
+    // },
   ]);
 
   useEffect(() => {
-    console.log("visibleCities", visibleCities);
-  }, [visibleCities]);
+    // console.log("visibleCities", visibleCities);
+    // if city not in saved city it should be removed from visible cities as well
+    setVisibleCities(
+      visibleCities.filter((city) => isCityInArray(city, savedCityCoordinates))
+    );
+    // if()
+  }, [savedCityCoordinates]);
 
   // const [wData, setWData] = useState<IWeatherData | null>(null);
   // useEffect(() => {
@@ -602,14 +626,15 @@ export function App() {
 
       <div className="flex flex-col w-full px-[50px] space-y-5 h-full overflow-y-auto">
         <div className="h-5 w-ful"></div>
-        {data.length > 0 && (
+        {/* {data.length > 0 && (
           <WeatherCardWrapper lat={data[0].lat} lon={data[0].lon} />
-        )}
+        )} */}
         {visibleCities.map((city, index) => (
           <WeatherCardWrapper
             key={`${city.lat}-${index}`}
             lat={city.lat}
             lon={city.lon}
+            cityName={city.name}
           />
         ))}
         {/* <div>
