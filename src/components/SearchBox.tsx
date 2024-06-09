@@ -12,7 +12,7 @@ const SearchBox = ({
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   return (
-    <div className="relative w-full flex-col flex bg-white text-black rounded border-2 border-black">
+    <div className="relative w-full flex-col flex bg-white text-black dark:border-darkBorder dark:bg-gray-700 dark:text-white rounded border-2 border-black">
       <div className="flex justify-start items-center ">
         <div className="flex justify-center items-center w-[50px] ">
           {isLoading ? (
@@ -36,7 +36,7 @@ const SearchBox = ({
         </div>
         <input
           onFocus={() => setShowSuggestions(true)}
-          className="w-full rounded px-3 py-2 focus:outline-none bg-gray-100/50"
+          className="w-full rounded px-3 py-2 focus:outline-none bg-gray-100/50 dark:bg-gray-700 "
           onChange={(e) => setQuery(e.target.value)}
           onBlur={() => setTimeout(() => setShowSuggestions(false), 1000)}
         ></input>
@@ -48,7 +48,7 @@ const SearchBox = ({
             <div className="w-full px-3 py-1 bg-white">No Data</div>
           )}
           {searchedData.length > 0 && (
-            <div className="w-full  flex flex-col rounded bg-white ">
+            <div className="w-full  flex flex-col rounded bg-white dark:bg-gray-700 ">
               {searchedData.map((city, index) => (
                 <div
                   className="px-3 rounded hover:bg-blue-300 hover:cursor-pointer group flex justify-between"

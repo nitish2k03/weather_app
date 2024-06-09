@@ -50,9 +50,9 @@ export const SideBar = ({
   };
 
   return (
-    <div className="border-r-2 border-black w-[300px] flex flex-col justify-between">
+    <div className="border-r-2 dark:border-darkBorder border-black w-[300px] flex flex-col justify-between">
       <div className="w-full h-[calc(100% - 50px)] flex flex-col">
-        <div className="border-b-2 border-black p-4">
+        <div className="border-b-2 border-black dark:border-darkBorder p-4">
           <SearchBox
             query={query}
             setQuery={setQuery}
@@ -69,7 +69,7 @@ export const SideBar = ({
             {savedCityCoordinates.map((city, index) => (
               <div
                 key={`${city.lat}-${index}`}
-                className="flex justify-between items-center bg-gray-300 mt-1 p-2 rounded"
+                className="flex justify-between items-center bg-gray-300 dark:bg-gray-700 dark:text-white mt-1 p-2 rounded"
               >
                 <div>{city.name}</div>
                 <div className="flex text-xs">
@@ -105,7 +105,7 @@ export const SideBar = ({
           </div>
         </div>
       </div>
-      <div className="border-t-2 h-[50px] border-black px-2 flex items-center">
+      <div className="border-t-2 h-[50px] border-black dark:border-darkBorder px-2 flex items-center">
         <div className="flex w-2/3 justify-center items-center">
           <RealTimeClock />
         </div>

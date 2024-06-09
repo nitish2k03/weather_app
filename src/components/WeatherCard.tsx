@@ -43,9 +43,9 @@ export const WeatherCard = ({
 }: IWeatherCard) => {
   return (
     <div
-      className={` w-full min-h-[400px] rounded-md flex border-2 border-black ${RubikFont.className}`}
+      className={` w-full min-h-[400px] rounded-md flex border-2 bg-black border-black dark:border-darkBorder ${RubikFont.className}`}
     >
-      <div className=" h-full w-1/3 flex flex-col border-r-2 border-black shadow-lg">
+      <div className=" h-full w-1/3 flex flex-col border-r-2 border-black dark:border-darkBorder shadow-lg">
         <div className="h-2/3  w-full flex flex-col text-white">
           <div className="w-full h-3/4 flex bg-indigo-600">
             <div className=" w-3/4 h-full flex justify-start items-center">
@@ -75,7 +75,7 @@ export const WeatherCard = ({
             Feels like {tempConv(feels_like)}°C
           </div>
         </div>
-        <div className="w-full  h-1/3 cflex flex-col bg-blue-400">
+        <div className="w-full  h-1/3 cflex flex-col bg-blue-400 dark:text-white ">
           <div className="text-4xl w-full flex px-4 font-semibold">
             {descHeading}
           </div>
@@ -117,13 +117,13 @@ export const WeatherCard = ({
             </div>
           </span>
         </div>
-        <div className="w-full grid grid-cols-2  h-2/3 text-2xl text-gray-800">
+        <div className="w-full grid grid-cols-2  h-2/3 text-2xl bg-white dark:bg-darkbg dark:text-white  text-gray-800">
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <BsSunrise className={"size-8"} />
             </span>
             {/* <span className="heading">Sunrise</span> */}
-            <span className="value">
+            <span className="value dark:text-darkText">
               {new Date(sunrise).toLocaleTimeString()}
             </span>
           </div>
@@ -132,7 +132,7 @@ export const WeatherCard = ({
               <BsSunset className={"size-8"} />
             </span>
             {/* <span className="heading">Sunset</span> */}
-            <span className="value">
+            <span className="value dark:text-darkText">
               {new Date(sunset).toLocaleTimeString()}
             </span>
           </div>
@@ -141,28 +141,28 @@ export const WeatherCard = ({
               <FaWind className={"size-8"} />
             </span>
             {/* <span className="heading">WindSpeed</span> */}
-            <span className="value">{windSpeed} m/s</span>
+            <span className="value dark:text-darkText">{windSpeed} m/s</span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <BsCloudSun className={"size-8"} />
             </span>
             {/* <span className="heading">Clouds</span> */}
-            <span className="value">{clouds} %</span>
+            <span className="value dark:text-darkText">{clouds} %</span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <WiFog className={"size-8"} />
             </span>
             {/* <span className="heading">Visibility</span> */}
-            <span className="value">{visibility} m</span>
+            <span className="value dark:text-darkText">{visibility} m</span>
           </div>
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <WiHumidity className={"size-10"} />
             </span>
             {/* <span className="heading">Humidity</span> */}
-            <span className="value">{humidity} %</span>
+            <span className="value dark:text-darkText">{humidity} %</span>
           </div>
         </div>
       </div>
