@@ -76,19 +76,15 @@ function Main() {
   //get the saved city coordinates from localstorage on page load
   useEffect(() => {
     if (window.location !== undefined && !localStorageGetterSetterDone) {
-      console.log("getting data from localstorage");
       const savedCityCoordinates = JSON.parse(
         localStorage.getItem("savedCityCoordinates") || "[]"
       ) as ICityFromAPI[];
       const visibleCities = JSON.parse(
         localStorage.getItem("visibleCities") || "[]"
       ) as ICityFromAPI[];
-      console.log("Saved: ", savedCityCoordinates, "Visble: ", visibleCities);
       setSavedCityCoordinates(savedCityCoordinates);
       setVisibleCities(visibleCities);
       setLocalStorageGetterSetterDone(true);
-    } else {
-      console.log("window.location is undefined");
     }
   }, []);
   return (
