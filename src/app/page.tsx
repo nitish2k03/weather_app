@@ -77,14 +77,14 @@ function Main() {
   //get the saved city coordinates from localstorage on page load
   useEffect(() => {
     if (window.location !== undefined && !localStorageGetterSetterDone) {
-      const savedCityCoordinates = JSON.parse(
+      const savedCityCoordinatesStored = JSON.parse(
         localStorage.getItem("savedCityCoordinates") || "[]"
       ) as ICityFromAPI[];
-      const visibleCities = JSON.parse(
+      const visibleCitiesStored = JSON.parse(
         localStorage.getItem("visibleCities") || "[]"
       ) as ICityFromAPI[];
-      setSavedCityCoordinates(savedCityCoordinates);
-      setVisibleCities(visibleCities);
+      setSavedCityCoordinates(savedCityCoordinatesStored);
+      setVisibleCities(visibleCitiesStored);
       setLocalStorageGetterSetterDone(true);
     }
   }, []);
