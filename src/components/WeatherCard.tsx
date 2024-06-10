@@ -85,8 +85,8 @@ export const WeatherCard = ({
         </div>
       </div>
       <div className=" h-full w-full lg:w-2/3 flex flex-col">
-        <div className="w-full  h-1/3 p-4 bg-black text-white flex justify-between items-center">
-          <span className="flex justify-start items-center font-semibold text-xl lg:text-4xl w-full ">
+        <div className="w-full  h-1/3 p-2 md:p-4 bg-black text-white flex justify-between items-center">
+          <span className="flex justify-start items-center font-semibold text-xl lg:text-4xl ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
