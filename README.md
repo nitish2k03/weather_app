@@ -12,6 +12,8 @@
 - Implementation of a dark mode and light mode toggle for user preference and comfort.
 
 ![Screenshot 2024-06-10 132326](https://github.com/nitish2k03/weather_app/assets/90318230/2e31b3fa-d270-43b3-8b37-503673c3186d)
+
+
 ![weather1](https://github.com/nitish2k03/weather_app/assets/90318230/1e3fbaac-7b33-47ab-9e60-c5081749251c)
 
 
