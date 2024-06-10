@@ -88,7 +88,9 @@ export const SideBar = ({
                       // if city is already visible then remove it
                       if (isCityInArray(city, visibleCities)) {
                         setVisibleCities(
-                          visibleCities.filter((item) => item !== city)
+                          visibleCities.filter(
+                            (item) => !isCittySame(item, city)
+                          )
                         );
                       } else {
                         setVisibleCities([...visibleCities, city]);
@@ -104,7 +106,9 @@ export const SideBar = ({
                     className="bg-red-500 rounded text-xs px-2 py-1 ml-2"
                     onClick={() => {
                       setSavedCityCoordinates(
-                        savedCityCoordinates.filter((item) => item !== city)
+                        savedCityCoordinates.filter(
+                          (item) => !isCittySame(item, city)
+                        )
                       );
                     }}
                   >
