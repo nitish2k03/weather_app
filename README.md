@@ -1,6 +1,6 @@
 <h1 align="center">Weather App</h1> 
 
-<h2 align="center">Web application to show the current weather forecasts .</h2>   
+<h2 align="center">Web application to show current weather forecasts .</h2>   
 
 ## 🚀 Features
 
