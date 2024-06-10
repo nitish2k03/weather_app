@@ -102,6 +102,7 @@ export const SideBar = ({
                     {isCityInArray(city, visibleCities) ? "Hide" : "Show"}
                   </button>
                   {/* UnPin Location */}
+                  {/*  */}
                   <button
                     className="bg-red-500 rounded text-xs px-2 py-1 ml-2"
                     onClick={() => {
