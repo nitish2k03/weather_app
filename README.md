@@ -22,4 +22,4 @@
 
 - [x] Dark Mode
 - [x] Beautify Appearance
-- [ ] Responsive Design
+- [x] Responsive Design
