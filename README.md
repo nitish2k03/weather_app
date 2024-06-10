@@ -1,6 +1,15 @@
 <h1 align="center">Weather App</h1> 
 
-<h2 align="center">Web application to show the current weather forecasts .</h2>    
+<h2 align="center">Web application to show the current weather forecasts .</h2>   
+
+## 🚀 Features
+
+- Displays weather data including temperature, humidity, wind speed, and conditions.
+- Allows users to search and find weather information for cities all over the world.
+- Continuously updates weather information to ensure the most accurate and up-to-date data.
+- Users can pin and view weather information for multiple locations simultaneously.
+- Optimized for all screen sizes, ensuring a seamless experience on mobile devices, tablets, and desktops.
+- Implementation of a dark mode and light mode toggle for user preference and comfort.
 
 ## Demo
 
