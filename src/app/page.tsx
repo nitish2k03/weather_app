@@ -40,7 +40,6 @@ function Main() {
   };
   const [localStorageGetterSetterDone, setLocalStorageGetterSetterDone] =
     useState(false);
-  const [currentCity, setCurrentCity] = useState<ICityFromAPI | null>(null);
   const [visibleCities, setVisibleCities] = useState<ICityFromAPI[]>([]);
   const [savedCityCoordinates, setSavedCityCoordinates] = useState<
     ICityFromAPI[]
