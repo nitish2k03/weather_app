@@ -1,6 +1,16 @@
 <h1 align="center">Weather App</h1> 
 
 <h2 align="center">Web application to show current weather forecasts .</h2>   
+The development approach focuses on creating a modern, responsive, and feature-rich weather application. The application leverages cutting-edge technologies to ensure performance, scalability, and maintainability. Emphasis is placed on user experience with features like real-time updates, multi-location tracking, and theme customization.
+
+## Technologies
+<p align="center">
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="reactjs" />
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="ts" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="tailwind"/>     
+</p>
+
+
 
 ## 🚀 Features
 
@@ -10,12 +20,14 @@
 - Users can pin and view weather information for multiple locations simultaneously.
 - Optimized for all screen sizes, ensuring a seamless experience on mobile devices, tablets, and desktops.
 - Implementation of a dark mode and light mode toggle for user preference and comfort.
+ <br/>
 
 ![Screenshot 2024-06-10 132326](https://github.com/nitish2k03/weather_app/assets/90318230/2e31b3fa-d270-43b3-8b37-503673c3186d)
 
 
 ![weather1](https://github.com/nitish2k03/weather_app/assets/90318230/1e3fbaac-7b33-47ab-9e60-c5081749251c)
 
+<br/>
 
 ## Demo
 
