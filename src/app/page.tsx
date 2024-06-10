@@ -111,13 +111,14 @@ function Main() {
           onClick={() => {
             setShowSideBar(true);
           }}
+          className="pl-5 pt-5"
         >
           <HiMenu />
         </button>
       )}
 
       {
-        <div className="flex flex-col w-full px-[50px] space-y-5 h-full overflow-y-auto">
+        <div className="flex flex-col w-full px-[20px] md:px-[50px] space-y-5 h-full overflow-y-auto">
           <div className="h-5 w-ful"></div>
           {visibleCities.map((city, index) => (
             <WeatherCardWrapper

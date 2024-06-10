@@ -53,7 +53,7 @@ export const SideBar = ({
   };
 
   return (
-    <div className="border-r-2 dark:border-darkBorder border-black w-[300px] flex flex-col justify-between">
+    <div className="border-r-2 dark:border-darkBorder border-black w-full md:w-[300px] flex flex-col justify-between">
       <div className="w-full h-[calc(100% - 50px)] flex flex-col">
         <div className="border-b-2 border-black dark:border-darkBorder p-4 flex items-center gap-2">
           <SearchBox

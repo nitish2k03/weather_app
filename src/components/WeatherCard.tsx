@@ -43,16 +43,16 @@ export const WeatherCard = ({
 }: IWeatherCard) => {
   return (
     <div
-      className={` w-full lg:min-h-[400px] rounded-md flex lg:flex-row flex-col border-2 bg-black border-black dark:border-darkBorder ${RubikFont.className}`}
+      className={` w-full min-h-[600px] md:min-h-[400px] rounded-md flex lg:flex-row flex-col border-2 bg-black border-black dark:border-darkBorder ${RubikFont.className}`}
     >
-      <div className=" h-full lg:w-1/3 w-full flex lg:flex-col border-r-2 border-black dark:border-darkBorder shadow-lg">
-        <div className="h-full lg:h-2/3  w-full flex lg:flex-col text-white">
-          <div className="w-full h-full lg:h-3/4 flex bg-indigo-600 lg:flex-row flex-col">
-            <div className="w-full lg:w-3/4 h-full flex justify-start items-center">
-              <div className=" h-full w-[70%] text-2xl md:text-6xl xl:text-9xl pl-6 font-extrabold flex justify-center items-center">
+      <div className=" h-full lg:w-1/3 w-full flex flex-col md:flex-row lg:flex-col border-r-2 border-black dark:border-darkBorder shadow-lg">
+        <div className="h-full lg:h-2/3  w-full flex flex-col md:flex-row lg:flex-col text-white">
+          <div className="w-full h-full lg:h-3/4 flex bg-indigo-600 flex-row lg:flex-row md:flex-col">
+            <div className="w-full lg:w-3/4 h-full flex justify-center md:justify-start items-center">
+              <div className=" h-full md:w-[70%] text-6xl xl:text-9xl pl-6 font-extrabold flex justify-center items-center">
                 {tempConv(temp)}
               </div>
-              <div className=" flex-col p-2 w-1/4 text-2xl xl:text-6xl font-semibold flex justify-center space-y-4">
+              <div className=" flex-col  p-2 w-1/4 text-2xl xl:text-6xl font-semibold flex justify-center items-start space-y-4">
                 <div className="cflex">
                   <FaRegCircle className="size-2 xl:size-5 font-bold" />
                 </div>
@@ -93,7 +93,7 @@ export const WeatherCard = ({
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-10 lg:size-14 mr-3 -mt-1"
+              className="size-10 lg:size-14 mr-3 md:-mt-1"
             >
               <path
                 strokeLinecap="round"
@@ -119,7 +119,7 @@ export const WeatherCard = ({
             </div>
           </span>
         </div>
-        <div className="w-full grid grid-cols-2  h-2/3 text-lg xl:text-2xl bg-white dark:bg-darkbg dark:text-white  text-gray-800">
+        <div className="w-full flex flex-col md:grid md:grid-cols-2  h-2/3 text-lg xl:text-2xl bg-white dark:bg-darkbg dark:text-white  text-gray-800">
           <div className=" h-full cflex px-4 !justify-start">
             <span className="icon mr-3">
               <BsSunrise className={"size-8"} />
@@ -159,7 +159,7 @@ export const WeatherCard = ({
             {/* <span className="heading">Visibility</span> */}
             <span className="value dark:text-darkText">{visibility} m</span>
           </div>
-          <div className=" h-full cflex px-4 !justify-start">
+          <div className=" h-full cflex px-3 !justify-start">
             <span className="icon mr-3">
               <WiHumidity className={"size-10"} />
             </span>
