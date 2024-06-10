@@ -14,12 +14,12 @@
 - [x] Multiple Locations
 - [x] Componenet Refactoring Into
 - [x] Local Storage (Saved Locations, Visible Locations)
-- [ ] Dark Mode Toggle
+- [x] Dark Mode Toggle
 - [x] Pinning locatioin duplicacy
 - [x] Fix metrics on weather card
 
 ## CSS Styling:
 
-- [ ] Dark Mode
+- [x] Dark Mode
 - [x] Beautify Appearance
 - [ ] Responsive Design
