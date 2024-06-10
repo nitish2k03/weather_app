@@ -9,6 +9,8 @@ type ISideBarProps = {
   setSelectedCity: (city: ISelectedCity) => void;
   setSavedCityCoordinates: (city: ICityFromAPI[]) => void;
   setVisibleCities: (city: ICityFromAPI[]) => void;
+  showSideBar: boolean;
+  setShowSideBar: (showSideBar: boolean) => void;
 };
 type City = {
   id: number;

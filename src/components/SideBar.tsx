@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SearchBox from "./SearchBox";
 import DarkModeButton from "./DarkModeButton";
+import { RxCross1 } from "react-icons/rx";
 
 const isCittySame = (city1: ICityFromAPI, city2: ICityFromAPI) => {
   return city1.lat === city2.lat && city1.lon === city2.lon;
@@ -39,6 +40,8 @@ export const SideBar = ({
   visibleCities,
   setSavedCityCoordinates,
   setVisibleCities,
+  showSideBar,
+  setShowSideBar,
 }: ISideBarProps) => {
   const handlePinThisCity = (city: City) => {
     // add this city to list of saved cities
@@ -52,7 +55,7 @@ export const SideBar = ({
   return (
     <div className="border-r-2 dark:border-darkBorder border-black w-[300px] flex flex-col justify-between">
       <div className="w-full h-[calc(100% - 50px)] flex flex-col">
-        <div className="border-b-2 border-black dark:border-darkBorder p-4">
+        <div className="border-b-2 border-black dark:border-darkBorder p-4 flex items-center gap-2">
           <SearchBox
             query={query}
             setQuery={setQuery}
@@ -60,6 +63,13 @@ export const SideBar = ({
             isLoading={loading}
             handlePinThisCity={handlePinThisCity}
           />
+          <button
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            <RxCross1 className="md:hidden" />
+          </button>
         </div>
         <div className="h-[78%] flex-col flex px-3 pt-3">
           <div className="font-bold border-b-2 border-gray-500 pb-2">

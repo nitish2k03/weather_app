@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
+import { HiMenu } from "react-icons/hi";
 
 import {
   QueryClient,
@@ -23,6 +24,7 @@ function Main() {
   const debouncedSearchTerm = useDebounce(query, 300);
   const [data, setData] = useState<City[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(true);
   const handleSearch = async (searchTerm: string) => {
     const res = (
       await axios.get(
@@ -88,31 +90,45 @@ function Main() {
     }
   }, []);
   return (
-    <main className="h-screen w-screen flex">
-      <SideBar
-        query={query}
-        setQuery={setQuery}
-        setSelectedCity={setCurrentSearchedCity}
-        selectedCity={currentSearchedCity}
-        loading={loading}
-        data={data}
-        savedCityCoordinates={savedCityCoordinates}
-        visibleCities={visibleCities}
-        setSavedCityCoordinates={setSavedCityCoordinates}
-        setVisibleCities={setVisibleCities}
-      />
+    <main className="h-screen w-screen flex flex-col md:flex-row">
+      {showSideBar ? (
+        <SideBar
+          query={query}
+          setQuery={setQuery}
+          setSelectedCity={setCurrentSearchedCity}
+          selectedCity={currentSearchedCity}
+          loading={loading}
+          data={data}
+          savedCityCoordinates={savedCityCoordinates}
+          visibleCities={visibleCities}
+          setSavedCityCoordinates={setSavedCityCoordinates}
+          setVisibleCities={setVisibleCities}
+          showSideBar={showSideBar}
+          setShowSideBar={setShowSideBar}
+        />
+      ) : (
+        <button
+          onClick={() => {
+            setShowSideBar(true);
+          }}
+        >
+          <HiMenu />
+        </button>
+      )}
 
-      <div className="flex flex-col w-full px-[50px] space-y-5 h-full overflow-y-auto">
-        <div className="h-5 w-ful"></div>
-        {visibleCities.map((city, index) => (
-          <WeatherCardWrapper
-            key={`${city.lat}-${index}`}
-            lat={city.lat}
-            lon={city.lon}
-            cityName={city.name}
-          />
-        ))}
-      </div>
+      {
+        <div className="flex flex-col w-full px-[50px] space-y-5 h-full overflow-y-auto">
+          <div className="h-5 w-ful"></div>
+          {visibleCities.map((city, index) => (
+            <WeatherCardWrapper
+              key={`${city.lat}-${index}`}
+              lat={city.lat}
+              lon={city.lon}
+              cityName={city.name}
+            />
+          ))}
+        </div>
+      }
     </main>
   );
 }
