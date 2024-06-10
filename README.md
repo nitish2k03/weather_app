@@ -1,7 +1,7 @@
 <h1 align="center">Weather App</h1> 
 
 <h2 align="center">Web application to show current weather forecasts .</h2>   
-The development approach focuses on creating a modern, responsive, and feature-rich weather application. The application leverages cutting-edge technologies to ensure performance, scalability, and maintainability. Emphasis is placed on user experience with features like real-time updates, multi-location tracking, and theme customization.
+This project is about building a web application to show a weather forecast using weather API from external services [Open weather map](https://openweathermap.org/). Here you will be able to search for a specific location in the world.The development approach focuses on creating a modern, responsive, and feature-rich weather application. The application leverages cutting-edge technologies to ensure performance, scalability, and maintainability. Emphasis is placed on user experience with features like real-time updates, multi-location tracking, and theme customization.
 <h3 align="center"><a href="https://weather-app-bice-ten-38.vercel.app/"><strong>Want to see live preview »</strong></a></h3>
 
 
