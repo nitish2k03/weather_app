@@ -1,3 +1,3 @@
 ## Demo
 
-https://drive.google.com/file/d/1ilzmecavU8OdyXkVrpJsCFs_ny9ANNl9/view?usp=drive_link
+(https://raw.githubusercontent.com/nitish2k03/weather_app/main/public/weather app demo.mp4)
